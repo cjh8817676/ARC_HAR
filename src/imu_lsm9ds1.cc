@@ -175,8 +175,8 @@ HX_DRV_IMU_ERROR_E imu_initial()
         return HX_DRV_IMU_ERROR;
 
     imu_set_reg(LSM9DS1_IMU_I2C_ADDR, LSM9DS1_CTRL_REG1_G, 0x78);    // 119 Hz, 2000 dps, 16 Hz BW   (gyro)
-    imu_set_reg(LSM9DS1_IMU_I2C_ADDR, LSM9DS1_CTRL_REG6_XL, 0x60);   // 119 Hz, 4G (0x70) ; 119 Hz, 2G (0x60) (linear acc)
-
+    imu_set_reg(LSM9DS1_IMU_I2C_ADDR, LSM9DS1_CTRL_REG6_XL, 0x50);   // 119 Hz, 4G (0x70) ; 119 Hz, 2G (0x60) (linear acc), 50 Hz, 4G (0x50) 
+    // 010 10 0 00
     imu_set_reg(LSM9DS1_MAG_I2C_ADDR, LSM9DS1_CTRL_REG1_M, 0xb4);    // Temperature compensation enable, medium performance, 20 Hz
     imu_set_reg(LSM9DS1_MAG_I2C_ADDR, LSM9DS1_CTRL_REG2_M, 0x00);    // 4 Gauss
     imu_set_reg(LSM9DS1_MAG_I2C_ADDR, LSM9DS1_CTRL_REG3_M, 0x00);    // Continuous conversion mode
@@ -202,12 +202,12 @@ HX_DRV_IMU_ERROR_E imu_receive(float *x, float *y, float *z)
     gy_raw = rBuffer[2] | (rBuffer[3] << 8);
     gz_raw = rBuffer[4] | (rBuffer[5] << 8);
 
-   	//*x = (float)gx_raw * 4.0 / 32768.0;
-    //*y = (float)gy_raw * 4.0 / 32768.0;
-    //*z = (float)gz_raw * 4.0 / 32768.0;
-    *x = (float)gx_raw * 2 / 32768.0;   
-    *y = (float)gy_raw * 2 / 32768.0;
-    *z = (float)gz_raw * 2 / 32768.0;
+   	*x = (float)gx_raw * 4.0 / 32768.0;
+    *y = (float)gy_raw * 4.0 / 32768.0;
+    *z = (float)gz_raw * 4.0 / 32768.0;
+    // *x = (float)gx_raw * 2 / 32768.0;   
+    // *y = (float)gy_raw * 2 / 32768.0;
+    // *z = (float)gz_raw * 2 / 32768.0;
 
 
     return HX_DRV_IMU_PASS;

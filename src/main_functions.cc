@@ -137,28 +137,29 @@ void setup() {
 
 // The name of this function is important for Arduino compatibility.
 
-void loop_har(float x_data[3][300],int *signal_pass) {
-
+void loop_har(float x_data[3][128],int *signal_pass) {
+  int i = 0;
+  int counter = 0;
   int32_t zero_point = input->params.zero_point;
   float scale = input->params.scale;
-  float x_data_temp[3][50];
   hx_drv_uart_initial(UART_BR_115200);
 
-  for (int i = 0 ;i< 300; i = i+6 )    //讀取三軸用的迴圈
-  {
-    x_data_temp[0][(i/6)] = (x_data[0][i] ) ;
-    x_data_temp[1][(i/6)] = (x_data[1][i] ) ;
-    x_data_temp[2][(i/6)] = (x_data[2][i] ) ;
-  }
 
    // read accelerometer (accx, accy, accz)into model
-  for (int i = 0; i < 50; i++) {  //  (int i = 0; i < 50; i=i++)(三軸輸入)        (int i = 0; i < 150; i=i+1)(temple.cc輸入)
-    input->data.f[3*i] = x_data[0][i];// x
-    input->data.f[3*i+1] =x_data[1][i];// y
-    input->data.f[3*i+2] = x_data[2][i];// z
-    //TF_LITE_REPORT_ERROR(error_reporter, "%f | %f | %f \n ", test_samples[j].image[i], test_samples[j].image[i+1], test_samples[j].image[i+2]);
-    //input->data.f[i] = test_samples[j].image[i];
-  }
+
+    for (i = 0 ; i < 3*128; i++) {  //  (int i = 0; i < 50; i=i++)(三軸輸入)        (int i = 0; i < 150; i=i+1)(temple.cc輸入)
+      // input->data.f[3*i] = x_data[0][i];// x
+      // input->data.f[3*i+1] =x_data[1][i];// y
+      // input->data.f[3*i+2] = x_data[2][i];// z
+      //TF_LITE_REPORT_ERROR(error_reporter, "%f | %f | %f \n ", test_samples[j].image[i], test_samples[j].image[i+1], test_samples[j].image[i+2]);
+      if (i % 128 == 0 && i != 0)
+        counter ++;
+      input->data.f[i] = x_data[counter][i-(128*counter)];
+
+    }
+
+
+
   //TF_LITE_REPORT_ERROR(error_reporter, "Test sample[%d] Start Invoking\n", j);
   // Run the model on this input and make sure it succeeds.   !!!!!!!!!!!!!!!!
   if (kTfLiteOk != interpreter->Invoke()) {

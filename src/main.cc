@@ -33,7 +33,7 @@ limitations under the License.
 char string_buf[100] = "test\n";
 
 #define accel_scale 1000
-#define sample_data 300
+#define sample_data 128
 #define sample_data_nim_of_bytes 17
 
 void acc_decode_to_str(accel_type *type, float data);
@@ -79,9 +79,6 @@ int main(int argc, char* argv[]) {
 
     while (true) {  
 		imu_receive(&acc_x, &acc_y, &acc_z);
-        acc_x = (acc_x +2 ) / 4;
-        acc_y = (acc_y +2 ) / 4;
-        acc_z = (acc_z +2 ) / 4;
         // imu_gyro_receive(&gyro_x, &gyro_y, &gyro_z);
         acc_decode_to_str(&accel_x,acc_x);
         acc_decode_to_str(&accel_y,acc_y);
@@ -130,7 +127,7 @@ int main(int argc, char* argv[]) {
         
         /*start to recognize*/
         counter ++;
-        if (counter >= 301){
+        if (counter >= 129){
             label = 0;
             counter = 0;
             // GPIO_UART_RX(in,&counter,&hal_gpio_ONE);

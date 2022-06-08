@@ -10,12 +10,12 @@
 #define MODEL_SETTINGS_H_
 
 constexpr int kNumCols = 3;
-constexpr int kNumRows = 50;
+constexpr int kNumRows = 128;
 constexpr int kNumChannels = 1;
 
 constexpr int kImageSize =  kNumCols*kNumRows*kNumChannels;
 
-constexpr int kCategoryCount = 6;
+constexpr int kCategoryCount = 4;
 extern const char* kCategoryLabels[kCategoryCount];
 
 #endif // MODEL_SETTINGS_H_

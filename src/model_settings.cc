@@ -10,10 +10,10 @@
 #include "model_settings.h"
 
 const char* kCategoryLabels[kCategoryCount] = {
-    "stairs", 
+    // "stairs", 
     "Jogging" , 
     "Sitting" , 
     "Standing" ,
-    "stairs", 
+    // "stairs", 
     "Walking"
 };

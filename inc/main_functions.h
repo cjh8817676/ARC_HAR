@@ -23,6 +23,6 @@ void setup();
 // Runs one iteration of data gathering and inference. This should be called
 // repeatedly from the application code. The name needs to be loop() for Arduino
 // compatibility.
-void loop_har(float x_data[3][300],int *signal_pass);
+void loop_har(float x_data[3][128],int *signal_pass);
 
 #endif  // TENSORFLOW_LITE_MICRO_EXAMPLES_PERSON_DETECTION_EXPERIMENTAL_MAIN_FUNCTIONS_H_
